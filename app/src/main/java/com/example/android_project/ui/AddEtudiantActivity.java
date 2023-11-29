@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android_project.R;
 import com.example.android_project.model.Etudiant;
 import com.example.android_project.network.ApiService;
-import com.example.android_project.network.RetrofitClientInstance;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +30,7 @@ public class AddEtudiantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajout_layout);
 
-        service = RetrofitClientInstance.getApiService();
+        //service = RetrofitClientInstance.getApiService();
 
         // Initialize views
         editTextNom = findViewById(R.id.nom);

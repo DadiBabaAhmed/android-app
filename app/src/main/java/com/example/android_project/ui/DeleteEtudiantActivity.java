@@ -3,6 +3,7 @@ package com.example.android_project.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -10,10 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android_project.R;
+import com.example.android_project.model.Etudiant;
 import com.example.android_project.network.ApiService;
 import com.example.android_project.network.RetrofitClientInstance;
-
-import android.widget.ArrayAdapter;
 
 import java.util.List;
 

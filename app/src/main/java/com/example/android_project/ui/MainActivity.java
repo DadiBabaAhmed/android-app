@@ -1,6 +1,9 @@
 package com.example.android_project.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +20,34 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button buttonAjouter, buttonSupprimer, buttonModifier;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
+        buttonAjouter = findViewById(R.id.ajouter);
+        buttonSupprimer = findViewById(R.id.Supprimer);
+        buttonModifier = findViewById(R.id.Modifier);
 
+        // Set onClickListener for Ajouter button
+        buttonAjouter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to AjouterEtudiantActivity
+                Intent intent = new Intent(MainActivity.this, AddEtudiantActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Set onClickListener for Supprimer button
+        buttonSupprimer.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to DeleteEtudiantActivity
+                Intent intent = new Intent(MainActivity.this, DeleteEtudiantActivity.class);
+                startActivity(intent);
+            }
+        });
         // Your implementation to fetch data, add, update, or delete etudiants
         ApiService service = RetrofitClientInstance.getApiService();
 
