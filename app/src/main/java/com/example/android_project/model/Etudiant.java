@@ -1,7 +1,7 @@
-package com.example.android_project;
+package com.example.android_project.model;
 
 public class Etudiant {
-    private int NCIN;
+    private int id,NCIN;
     private String NCE, Nom, Prenom, Classe;
 
     public Etudiant(){}
@@ -12,11 +12,18 @@ public class Etudiant {
         this.NCE=nce;
         this.Classe=classe;
     }
+
     public int getNCIN(){
         return this.NCIN;
     }
     public void setNCIN(int ncin){
         this.NCIN=ncin;
+    }
+    public int getId(){
+        return this.id;
+    }
+    public void setId(int id){
+        this.id=id;
     }
     public String getNCE(){
         return this.NCE;
