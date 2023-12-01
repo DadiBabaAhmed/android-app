@@ -3,15 +3,14 @@ package com.example.projbdexterne;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,12 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class DeleteEtudiantActivity extends AppCompatActivity {
 
-    Spinner spinnerNCIN;
-    Button deleteButton;
+    EditText idToDelete;
+    Button deleteButton, annulerButoon;
+
     ProgressDialog dialog;
 
     @Override
@@ -33,90 +32,29 @@ public class DeleteEtudiantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.supprimer_layout);
 
-        spinnerNCIN = findViewById(R.id.spinner_ncin);
-        deleteButton = findViewById(R.id.btn_supprimer);
+        idToDelete = findViewById(R.id.ncin_input);
+        deleteButton = findViewById(R.id.buttonDelete);
+        annulerButoon = findViewById(R.id.buttonAnnuler);
 
-        fillSpinnerWithNCIN();
+        annulerButoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("DeleteEtudiant", "Delete button clicked"); // Check if this log message appears in Logcat
                 deleteEtudiant();
             }
         });
     }
 
-    private void fillSpinnerWithNCIN() {
-        new FetchNCINsTask().execute();
-    }
-
-    private class FetchNCINsTask extends AsyncTask<Void, Void, ArrayList<String>> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(DeleteEtudiantActivity.this);
-            dialog.setMessage("Fetching NCINs...");
-            dialog.show();
-        }
-
-        @Override
-        protected ArrayList<String> doInBackground(Void... params) {
-            ArrayList<String> ncinList = new ArrayList<>();
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL("http://your_server_address/get_ncins.php");
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-
-                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
-                }
-
-                JSONArray jsonArray = new JSONArray(sb.toString());
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String ncin = jsonObject.getString("NCIN");
-                    ncinList.add(ncin);
-                }
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            return ncinList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> ncinList) {
-            dialog.dismiss();
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(DeleteEtudiantActivity.this,
-                    android.R.layout.simple_spinner_dropdown_item, ncinList);
-            spinnerNCIN.setAdapter(adapter);
-        }
-    }
-
     private void deleteEtudiant() {
-        String selectedNCIN = spinnerNCIN.getSelectedItem().toString();
-        new DeleteEtudiantTask().execute(selectedNCIN);
+        String id = idToDelete.getText().toString();
+        new DeleteEtudiantTask().execute(id);
     }
 
     private class DeleteEtudiantTask extends AsyncTask<String, Void, String> {
@@ -136,7 +74,7 @@ public class DeleteEtudiantActivity extends AppCompatActivity {
 
             try {
                 String id = params[0];
-                URL url = new URL("http://10.0.2.2/php/AndroidProject/api/add_etudiant.php?id=" + id);
+                URL url = new URL("http://10.0.2.2/php/AndroidProject/api/delete_etudiant.php?id=" + id);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
 
@@ -171,11 +109,16 @@ public class DeleteEtudiantActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
             dialog.dismiss();
 
+            Log.d("DeleteEtudiant", "Server Response: " + response); // Log the server response
+
             if (response != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int success = jsonObject.getInt("success");
                     String message = jsonObject.getString("message");
+
+                    Log.d("DeleteEtudiant", "Success: " + success); // Log the success value
+                    Log.d("DeleteEtudiant", "Message: " + message); // Log the message value
 
                     if (success == 1) {
                         Toast.makeText(DeleteEtudiantActivity.this, "Student deleted successfully", Toast.LENGTH_SHORT).show();

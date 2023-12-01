@@ -5,7 +5,7 @@ public class Etudiant {
     private String nom, prenom, nce, classe;
 
     public Etudiant(){}
-    public Etudiant(int id, int ncin, String nom, String prenom, String nce, String classe) {
+    public Etudiant(int ncin, String nom, String prenom, String nce, String classe) {
         this.id = id;
         this.ncin = ncin;
         this.nom = nom;

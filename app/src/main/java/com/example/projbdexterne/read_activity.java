@@ -1,13 +1,13 @@
 package com.example.projbdexterne;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,7 +96,7 @@ public class read_activity extends AppCompatActivity {
             return null;
         }
 
-        @Override
+            @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 dialog.dismiss();
@@ -108,4 +108,5 @@ public class read_activity extends AppCompatActivity {
                 }
             }
 
-}}
+    }
+}

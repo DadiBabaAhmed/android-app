@@ -1,7 +1,5 @@
 package com.example.projbdexterne;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 import org.json.JSONObject;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -37,24 +34,31 @@ public class AddEtudiantActivity extends AppCompatActivity {
         annuler = findViewById(R.id.btn_annuler);
         read = findViewById(R.id.read_btn);
 
+        annuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddEtudiantActivity.this, read_activity.class);
+                startActivity(intent);
+            }
+        });
+
         ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addEtudiant();
-                Intent i = new Intent( AddEtudiantActivity.this, read_activity.class);
-                startActivity(i);
             }
         });
-        read.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent( AddEtudiantActivity.this, read_activity.class);
-                        startActivity(i);
-                    }
-                }
-        );
-    }  // ...Other parts of your code
+
+        // ...Other parts of your code
+    }
+
     private void addEtudiant() {
         String nomValue = nom.getText().toString();
         String prenomValue = prenom.getText().toString();
@@ -62,8 +66,8 @@ public class AddEtudiantActivity extends AppCompatActivity {
         String nceValue = NCE.getText().toString();
         String classeValue = classe.getText().toString();
 
-        Etudiant newEtudiant = new Etudiant(0, ncinValue, nomValue, prenomValue, nceValue, classeValue);
-        new AddEtudiantActivity().execute(newEtudiant);
+        Etudiant newEtudiant = new Etudiant(ncinValue, nomValue, prenomValue, nceValue, classeValue);
+        new AddEtudiantTask().execute(newEtudiant);
     }
 
     private class AddEtudiantTask extends AsyncTask<Etudiant, Void, Boolean> {

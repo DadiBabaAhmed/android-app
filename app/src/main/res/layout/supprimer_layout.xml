@@ -15,25 +15,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sélectionner le NCIN"
-            android:textSize="25sp"
             android:layout_marginRight="100px"/>
 
-        <Spinner
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner_ncin"/>
+            android:inputType="number"
+            android:textSize="48dp"
+            android:hint="exp: 12345678"
+            android:id="@+id/ncin_input"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_supprimer"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supprimer"/>
-    <Button
-        android:id="@+id/btn_annuler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="annuler"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="100px">
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supprimer"/>
+
+        <Button
+            android:id="@+id/buttonAnnuler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Annuler"/>
+
+    </LinearLayout>
 
 </LinearLayout>
