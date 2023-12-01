@@ -1,7 +1,5 @@
 package com.example.projbdexterne;
 
-import static android.net.wifi.WifiConfiguration.Status.strings;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -103,7 +101,7 @@ public class read_activity extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 dialog.dismiss();
                 if (success == 1) {
-                   SimpleAdapter adapter = new SimpleAdapter(read_activity.this, values, R.layout.item,
+                   SimpleAdapter adapter = new SimpleAdapter(read_activity.this, values, R.layout.afficher_layout,
                            new String[]{"id", "NCIN", "NCE","Nom", "Prenom", "classe"},
                            new int[]{R.id.num, R.id.myncin, R.id.mynce, R.id.mynom, R.id.myprenom, R.id.myclasse});
                     ls.setAdapter(adapter);

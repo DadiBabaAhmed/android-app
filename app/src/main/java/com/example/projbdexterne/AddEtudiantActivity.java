@@ -1,5 +1,7 @@
 package com.example.projbdexterne;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,7 +17,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class AddEtudiantActivity extends AppCompatActivity {
 
     EditText nom, prenom, NCIN, NCE, classe;
     Button ajouter, annuler, read;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addEtudiant();
-                Intent i = new Intent( MainActivity.this, read_activity.class);
+                Intent i = new Intent( AddEtudiantActivity.this, read_activity.class);
                 startActivity(i);
             }
         });
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent( MainActivity.this, read_activity.class);
+                        Intent i = new Intent( AddEtudiantActivity.this, read_activity.class);
                         startActivity(i);
                     }
                 }
@@ -61,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
         String classeValue = classe.getText().toString();
 
         Etudiant newEtudiant = new Etudiant(0, ncinValue, nomValue, prenomValue, nceValue, classeValue);
-        new AddEtudiantTask().execute(newEtudiant);
+        new AddEtudiantActivity().execute(newEtudiant);
     }
 
     private class AddEtudiantTask extends AsyncTask<Etudiant, Void, Boolean> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(MainActivity.this);
+            dialog = new ProgressDialog(AddEtudiantActivity.this);
             dialog.setMessage("Adding student...");
             dialog.show();
         }
@@ -107,42 +109,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean success) {
             dialog.dismiss();
             if (success) {
-                Toast.makeText(MainActivity.this, "Student added successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddEtudiantActivity.this, "Student added successfully", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivity.this, "Error adding student", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddEtudiantActivity.this, "Error adding student", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    // /*
-    // Button buttonAjouter, buttonSupprimer;
-    //    @Override
-    //    protected void onCreate(Bundle savedInstanceState) {
-    //        super.onCreate(savedInstanceState);
-    //        setContentView(R.layout.home_layout);
-    //        buttonAjouter = findViewById(R.id.ajouter);
-    //        buttonSupprimer = findViewById(R.id.supprimer);
-    //
-    //        // Set onClickListener for Ajouter button
-    //        buttonAjouter.setOnClickListener(new View.OnClickListener() {
-    //            @Override
-    //            public void onClick(View v) {
-    //                // Navigate to AjouterEtudiantActivity
-    //                Intent intent = new Intent(MainActivity.this, AddEtudiantActivity.class);
-    //                startActivity(intent);
-    //            }
-    //        });
-    //
-    //        // Set onClickListener for Supprimer button
-    //        buttonSupprimer.setOnClickListener( new View.OnClickListener() {
-    //            @Override
-    //            public void onClick(View v) {
-    //                // Navigate to DeleteEtudiantActivity
-    //                Intent intent = new Intent(MainActivity.this, DeleteEtudiantActivity.class);
-    //                startActivity(intent);
-    //            }
-    //        });
-    //    }
-    // */...Other parts of your code
+    // ...Other parts of your code
 }
-
